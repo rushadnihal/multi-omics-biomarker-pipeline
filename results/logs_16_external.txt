@@ -1,0 +1,17 @@
+== GSE31210
+  tissue: {'primary lung tumor': 226, 'normal lung': 20}
+  pathological stage values: {'IA': 114, 'II': 58, 'IB': 54}
+  exclusion field values: {'none': 204, 'exclude': 22, '(absent)': 20}
+  expression after log2(x+1): genes 11753, samples 226, median 9.15, p1 1.94, p99 14.07
+  tumours 226 (pre-specified 226); deaths 35 (35); flagged 22 (22) -> sensitivity set 204 (204)
+  age 30-76, male 46%, stage {'I': 168, 'II': 58}, median follow-up 4.8y, missing age/time 0/0
+
+== GSE68465
+  disease_state: {'Lung Adenocarcinoma': 443, 'Normal': 19}
+  disease_stage examples: {'pN0pT2': 162, 'pN0pT1': 114, 'pN1pT2': 55, 'pN2pT2': 34, 'pN1pT1': 24, 'pN0pT3': 16, 'pN2pT1': 11, 'pN0pT4': 7, 'pN1pT3': 7, 'pN2pT3': 5, 'pN2pT4': 3, 'pN1pT4': 2}
+  unparsed disease_stage: 22; derived stage (all samples): {'I': 276, 'II': 95, 'III': 69, nan: 22}
+  expression after log2(x+1): genes 11753, samples 443, median 8.21, p1 2.50, p99 13.25
+  adenocarcinomas 443 (pre-specified 442); deaths 236; adjuvant chemo 89
+  age 33-87, male 50%, stage {'I': 276, 'II': 95, 'III': 69, nan: 3}, median follow-up 3.9y, missing age/time 0/1
+
+saved data/processed/gse*_cohort.parquet and data/interim/gse*_gene_log2.parquet (signature NOT scored)

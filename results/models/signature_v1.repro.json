@@ -1,0 +1,95 @@
+{
+  "name": "signature_v1",
+  "created": "2026-11-06",
+  "seed": 42,
+  "model": "clinical (unpenalised) + elastic-net Cox on RNA genes shared by TCGA, GPL570 and GPL96",
+  "tuning": {
+    "l1_ratio": 0.9,
+    "alpha": 0.1048871853451444,
+    "inner_cv_harrell": 0.6996965659864187,
+    "k_screen": 1000,
+    "n_events": 159,
+    "n_patients": 442,
+    "pool_size": 11753
+  },
+  "clinical": {
+    "features": [
+      "age",
+      "male",
+      "stage_II",
+      "stage_III",
+      "stage_IV"
+    ],
+    "median": [
+      66.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mean": [
+      65.18778280542986,
+      0.4638009049773756,
+      0.24434389140271492,
+      0.1583710407239819,
+      0.04524886877828054
+    ],
+    "sd": [
+      9.95594527980086,
+      0.4986879139234268,
+      0.42969752469713474,
+      0.365088566632475,
+      0.20784949557205157
+    ],
+    "coef": [
+      0.06365560808445551,
+      -0.011444961274206378,
+      0.34367604796376205,
+      0.4298620367016861,
+      0.29068115055124155
+    ]
+  },
+  "rna": {
+    "genes": [
+      "DKK1",
+      "TLE1",
+      "LDHA",
+      "USP4",
+      "SEC61G"
+    ],
+    "mean": [
+      2.212558068385626,
+      5.100426929838517,
+      9.579718904797309,
+      6.052954692646389,
+      6.016351085982172
+    ],
+    "sd": [
+      2.070309888006774,
+      0.6931829328178977,
+      0.7307590787351549,
+      0.4035095123694648,
+      0.670828266162086
+    ],
+    "coef": [
+      0.1483230366130631,
+      0.11603553402507422,
+      0.010051313160282613,
+      -0.008994418681817676,
+      0.01865233442724052
+    ],
+    "scale_note": "TCGA log2(CPM+1); arrays: log2(x+1), highest-mean probe per gene, per-gene z-score within cohort"
+  },
+  "cutoff": {
+    "tcga_median_lp": -0.1657840797218117,
+    "tcga_lp_sd": 0.5828573966386339
+  },
+  "external_plan": {
+    "primary": "GSE31210, all 226 tumours (OS); sensitivity: 204 without flagged incomplete resection/adjuvant therapy",
+    "secondary": "GSE68465, 442 adenocarcinomas (OS; stage derived from pT/pN, no stage IV)",
+    "scoring": "frozen coefficients; no refitting, tuning, or threshold search on external data",
+    "success": "Harrell C > 0.60 with lower 95% CI > 0.50; high-vs-low HR > 1 with p < 0.05; calibration slope near 1",
+    "groups": "primary split at the frozen TCGA median lp; within-cohort median split reported as sensitivity",
+    "also_report": "RNA component alone and clinical component alone, HR per SD, Uno C at 5y"
+  }
+}

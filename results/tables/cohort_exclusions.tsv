@@ -1,0 +1,12 @@
+step	description	n_removed	n_remaining
+S0	Liu pan-cancer table, LUAD rows (samples)		641
+S1	keep primary tumour (code 01); dropped {'11': 120, '02': 2}	122.0	519
+S2	one row per patient	0.0	519
+S3	drop missing OS or OS.time	9.0	510
+S4	drop OS.time <= 0 d	4.0	506
+C0	stage unmapped to I-IV: 8 (kept; NaN)	0.0	506
+L-rna	rna: tumour samples 528, duplicate vials dropped 12, patients in cohort with rna: 503	12.0	503
+L-meth	meth: tumour samples 469, duplicate vials dropped 11, patients in cohort with meth: 447	11.0	447
+L-mirna	mirna: tumour samples 516, duplicate vials dropped 3, patients in cohort with mirna: 500	3.0	500
+C1	core cohort: complete case across ['rna', 'meth', 'mirna']	64.0	442
+C2	core cohort OS events: 159		442

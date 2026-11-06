@@ -1,0 +1,126 @@
+seed: 42
+paths:
+  raw: data/raw
+  interim: data/interim
+  processed: data/processed
+  tables: results/tables
+  figures: results/figures
+  models: results/models
+endpoint:
+  primary: OS
+  secondary: PFI
+cv:
+  outer_folds: 5
+  outer_repeats: 5
+  inner_folds: 5
+  stratify_on: event
+discovery_cohort: TCGA-LUAD
+external_cohort: GSE31210        # pre-specified external test (35 OS events: wide CI expected)
+external_secondary: GSE68465     # better-powered secondary check (GPL96), decided before any results
+
+downloads:
+  # name: [required?, [candidate urls tried in order]]
+  rna_counts:
+    required: true
+    urls: [https://gdc-hub.s3.us-east-1.amazonaws.com/download/TCGA-LUAD.star_counts.tsv.gz]
+  methylation450:
+    required: true
+    urls: [https://gdc-hub.s3.us-east-1.amazonaws.com/download/TCGA-LUAD.methylation450.tsv.gz]
+  mirna:
+    required: true
+    urls: [https://gdc-hub.s3.us-east-1.amazonaws.com/download/TCGA-LUAD.mirna.tsv.gz]
+  clinical:
+    required: true
+    urls: [https://gdc-hub.s3.us-east-1.amazonaws.com/download/TCGA-LUAD.clinical.tsv.gz]
+  survival_pancan:
+    required: true
+    urls: [https://tcga-pancan-atlas-hub.s3.us-east-1.amazonaws.com/download/Survival_SupplementalTable_S1_20171025_xena_sp]
+  somatic_mutation:
+    required: false
+    urls: [https://gdc-hub.s3.us-east-1.amazonaws.com/download/TCGA-LUAD.somaticmutation_wxs.tsv.gz]
+  cnv:
+    required: false
+    urls:
+      - https://gdc-hub.s3.us-east-1.amazonaws.com/download/TCGA-LUAD.cnv.tsv.gz
+      - https://gdc-hub.s3.us-east-1.amazonaws.com/download/TCGA-LUAD.focal_cnv.tsv.gz
+      - https://gdc-hub.s3.us-east-1.amazonaws.com/download/TCGA-LUAD.masked_cnv.tsv.gz
+  meth_probemap:
+    required: true
+    filename: illuminaMethyl450_probemap_hg19.tsv   # Xena legacy probeMap (chrom per probe)
+    urls: [https://tcga-xena-hub.s3.us-east-1.amazonaws.com/download/probeMap%2FilluminaMethyl450_hg19_GPL16304_TCGAlegacy]
+  gse31210_matrix:
+    required: true
+    urls: [https://ftp.ncbi.nlm.nih.gov/geo/series/GSE31nnn/GSE31210/matrix/GSE31210_series_matrix.txt.gz]
+  gse68465_matrix:
+    required: false
+    urls: [https://ftp.ncbi.nlm.nih.gov/geo/series/GSE68nnn/GSE68465/matrix/GSE68465_series_matrix.txt.gz]
+
+  gpl570_annot:
+    required: true
+    filename: GPL570_full.soft            # probe -> gene symbol / Entrez for GSE31210
+    urls: ["https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL570&targ=self&form=text&view=full"]
+  gpl96_annot:
+    required: true
+    filename: GPL96_full.soft             # probe -> gene symbol / Entrez for GSE68465
+    urls: ["https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL96&targ=self&form=text&view=full"]
+  gencode_probemap:
+    required: true
+    filename: gencode_v36_gene_probemap.tsv   # Ensembl gene id -> symbol for the TCGA RNA features
+    urls: [https://gdc-hub.s3.us-east-1.amazonaws.com/download/gencode.v36.annotation.gtf.gene.probemap]
+
+# ---- Cohort rules (fixed before modelling; milestone 2) ----
+cohort:
+  tumour_sample_code: "01"        # primary tumour only (drops 02 recurrent, 11 normal)
+  exclude_vials: ["Z"]            # FFPE scroll vials
+  one_sample_per_patient: first_by_id   # deterministic: lowest sample ID per patient per layer
+  drop_os_time_le: 0              # drop OS.time missing or <= this (days)
+  core_layers: [rna, meth, mirna] # benchmark cohort = complete case across these
+  raw_files:
+    rna: TCGA-LUAD.star_counts.tsv.gz
+    meth: TCGA-LUAD.methylation450.tsv.gz
+    mirna: TCGA-LUAD.mirna.tsv.gz
+    survival: Survival_SupplementalTable_S1_20171025_xena_sp
+    clinical: TCGA-LUAD.clinical.tsv.gz
+
+external:
+  GSE31210:
+    primary: all_tumours          # n=226 (35 deaths); matches TCGA (no adjuvant filter)
+    sensitivity: exclude_flagged  # n=204, authors' prognosis set; pre-specified
+  GSE68465:
+    primary: all_adenocarcinoma   # n=442 (disease_state == Lung Adenocarcinoma)
+
+# ---- Evaluation (fixed before modelling) ----
+evaluation:
+  tau_days: 1825          # Uno's C truncation time (5 years); clipped per fold to stay inside follow-up
+  outer_cv: {n_splits: 5, n_repeats: 5}   # repeated stratified on event; same folds for all models
+
+# ---- Single-omics elastic-net Cox (milestone 5; pre-specified) ----
+single_omics:
+  n_jobs: 4
+  inner_folds: 5
+  l1_grid: [0.1, 0.5, 0.9]
+  n_alphas: 30
+  alpha_min_ratio: 0.05
+  layers:
+    rna:   {file: rna_log2cpm.parquet,  prevalence_min_value: 1.0, prevalence_min_frac: 0.2, k_screen: 1000}
+    mirna: {file: mirna_log2rpm.parquet, prevalence_min_value: 0.0, prevalence_min_frac: 0.2, k_screen: 300}
+    meth:  {file: meth_mvalue_autosomal.parquet, max_missing: 0.1, k_screen: 2000}
+
+# ---- Integration benchmark (milestone 6; pre-specified) ----
+integration:
+  clinical_features: [age, male, stage_II, stage_III, stage_IV]   # unpenalised in combined models
+  early_combos: [rna, mirna, meth, all]       # clinical (unpenalised) + penalised omics block(s), same k per layer
+  criterion: "Uno C of clinical+omics minus clinical-only (age+sex+stage), paired folds, Nadeau-Bengio CI excludes 0"
+
+# ---- Non-linear comparators (milestone 6d; hyperparameters fixed in advance, NOT tuned) ----
+nonlinear:
+  rsf_omics:  {n_estimators: 500, min_samples_leaf: 15, max_features: sqrt}
+  rsf_clin:   {n_estimators: 500, min_samples_leaf: 15, max_features: null}   # 5 clinical features, use all
+  gbm_omics:  {n_estimators: 200, learning_rate: 0.05, max_depth: 2, subsample: 0.7, max_features: sqrt}
+
+# ---- MOFA+ intermediate integration (milestone 6c; fixed in advance, NOT tuned) ----
+mofa:
+  n_factors: 8          # + 5 clinical = 13 unpenalised predictors, within the EPV budget (~127 training events)
+  cox_alpha: 1.0e-2     # mild ridge for the factor Cox models
+  iterations: 1000
+  convergence_mode: fast

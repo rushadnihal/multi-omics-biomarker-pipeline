@@ -1,0 +1,1678 @@
+.venv/bin/python scripts/01_download.py
+##O=- #     #                                                                                                                                                                                                  #=O#-   #      #                                                                                                                                                                                               -#O=-#     #       #                                                                                                                                                                                           -=#=-  #      #        #                                                                                                                                                                                       curl: (22) The requested URL returned error: 403
+
+##O=- #     #                                                                                                                                                                                                  #=O#-   #      #                                                                                                                                                                                               -#O=-#     #       #                                                                                                                                                                                           curl: (22) The requested URL returned error: 403
+
+##O=- #     #                                                                                                                                                                                                  #=O#-   #      #                                                                                                                                                                                               -#O=-#     #       #                                                                                                                                                                                           curl: (22) The requested URL returned error: 403
+
+[skip] rna_counts: TCGA-LUAD.star_counts.tsv.gz already present
+[skip] methylation450: TCGA-LUAD.methylation450.tsv.gz already present
+[skip] mirna: TCGA-LUAD.mirna.tsv.gz already present
+[skip] clinical: TCGA-LUAD.clinical.tsv.gz already present
+[skip] survival_pancan: Survival_SupplementalTable_S1_20171025_xena_sp already present
+[skip] somatic_mutation: TCGA-LUAD.somaticmutation_wxs.tsv.gz already present
+[get ] cnv: https://gdc-hub.s3.us-east-1.amazonaws.com/download/TCGA-LUAD.cnv.tsv.gz
+  failed: curl exit code 22
+[get ] cnv: https://gdc-hub.s3.us-east-1.amazonaws.com/download/TCGA-LUAD.focal_cnv.tsv.gz
+  failed: curl exit code 22
+[get ] cnv: https://gdc-hub.s3.us-east-1.amazonaws.com/download/TCGA-LUAD.masked_cnv.tsv.gz
+  failed: curl exit code 22
+[warn] optional 'cnv' not available; continuing
+[skip] meth_probemap: illuminaMethyl450_probemap_hg19.tsv already present
+[skip] gse31210_matrix: GSE31210_series_matrix.txt.gz already present
+[skip] gse68465_matrix: GSE68465_series_matrix.txt.gz already present
+[skip] gpl570_annot: GPL570_full.soft already present
+[skip] gpl96_annot: GPL96_full.soft already present
+[skip] gencode_probemap: gencode_v36_gene_probemap.tsv already present
+
+Manifest: data/raw/MANIFEST.tsv
+  rna_counts         TCGA-LUAD.star_counts.tsv.gz                                 66.5 MB
+  methylation450     TCGA-LUAD.methylation450.tsv.gz                            1706.6 MB
+  mirna              TCGA-LUAD.mirna.tsv.gz                                        3.1 MB
+  clinical           TCGA-LUAD.clinical.tsv.gz                                     0.1 MB
+  survival_pancan    Survival_SupplementalTable_S1_20171025_xena_sp                2.4 MB
+  somatic_mutation   TCGA-LUAD.somaticmutation_wxs.tsv.gz                          5.1 MB
+  meth_probemap      illuminaMethyl450_probemap_hg19.tsv                          18.2 MB
+  gse31210_matrix    GSE31210_series_matrix.txt.gz                                59.9 MB
+  gse68465_matrix    GSE68465_series_matrix.txt.gz                                36.6 MB
+  gpl570_annot       GPL570_full.soft                                             85.6 MB
+  gpl96_annot        GPL96_full.soft                                              46.6 MB
+  gencode_probemap   gencode_v36_gene_probemap.tsv                                 3.2 MB
+.venv/bin/python scripts/02_cohort.py
+   step                                                                              description  n_removed  n_remaining
+     S0                                                Liu pan-cancer table, LUAD rows (samples)        NaN          641
+     S1                              keep primary tumour (code 01); dropped {'11': 120, '02': 2}      122.0          519
+     S2                                                                      one row per patient        0.0          519
+     S3                                                               drop missing OS or OS.time        9.0          510
+     S4                                                                      drop OS.time <= 0 d        4.0          506
+     C0                                                    stage unmapped to I-IV: 8 (kept; NaN)        0.0          506
+  L-rna    rna: tumour samples 528, duplicate vials dropped 12, patients in cohort with rna: 503       12.0          503
+ L-meth  meth: tumour samples 469, duplicate vials dropped 11, patients in cohort with meth: 447       11.0          447
+L-mirna mirna: tumour samples 516, duplicate vials dropped 3, patients in cohort with mirna: 500        3.0          500
+     C1                               core cohort: complete case across ['rna', 'meth', 'mirna']       64.0          442
+     C2                                                               core cohort OS events: 159        NaN          442
+
+cohort.parquet: 506 patients, core 442
+core OS events: 159 | median follow-up-ish (OS.time) days: 632
+core stage: {'I': np.int64(239), 'II': np.int64(108), 'III': np.int64(70), 'IV': np.int64(20), None: np.int64(5)}
+core gender: {'FEMALE': np.int64(237), 'MALE': np.int64(205)}
+core age missing: 10 | pack_years missing: 142
+caffeinate -i .venv/bin/python scripts/03c_build_matrices_qc.py
+RNA ...
+  saved (60660, 442)
+miRNA ...
+  saved (1881, 442)
+Methylation (streaming, a few minutes) ...
+  saved (486427, 442)
+  methylation NaN fraction per sample: median=14.16% max=21.17%; samples >10%: 442
+  methylation probes complete in all 442 samples: 336008 of 486427
+
+Variance of leading PCs explained by covariates (R^2). Chance level for TSS ~ 0.029
+layer                                               PC   var%  R2_tss  R2_sex R2_stage  extra
+RNA (top 5000 var, log2CPM)                          1   10.8   0.076   0.044    0.039  rho(libsize)=-0.01
+RNA (top 5000 var, log2CPM)                          2    8.4   0.113   0.004    0.010  rho(libsize)=0.07
+RNA (top 5000 var, log2CPM)                          3    6.0   0.037   0.019    0.013  rho(libsize)=0.02
+RNA (top 5000 var, log2CPM)                          4    4.3   0.032   0.022    0.010  rho(libsize)=-0.03
+RNA (top 5000 var, log2CPM)                          5    3.6   0.047   0.018    0.005  rho(libsize)=0.10
+                                                   PC1/PC2 robust outliers (>4 MAD): 0/0
+miRNA (top 500 var)                                  1   11.9   0.070   0.000    0.004  
+miRNA (top 500 var)                                  2    8.9   0.060   0.025    0.005  
+miRNA (top 500 var)                                  3    7.0   0.094   0.006    0.029  
+miRNA (top 500 var)                                  4    4.5   0.058   0.000    0.000  
+miRNA (top 500 var)                                  5    4.0   0.164   0.001    0.017  
+                                                   PC1/PC2 robust outliers (>4 MAD): 1/3
+Methylation (top 20000 var, complete probes, M)      1   21.2   0.028   0.218    0.016  rho(NaN frac)=-0.01
+Methylation (top 20000 var, complete probes, M)      2   13.9   0.040   0.694    0.021  rho(NaN frac)=-0.00
+Methylation (top 20000 var, complete probes, M)      3    7.3   0.048   0.063    0.003  rho(NaN frac)=0.07
+Methylation (top 20000 var, complete probes, M)      4    2.9   0.065   0.001    0.001  rho(NaN frac)=0.07
+Methylation (top 20000 var, complete probes, M)      5    2.1   0.049   0.000    0.010  rho(NaN frac)=-0.00
+                                                   PC1/PC2 robust outliers (>4 MAD): 0/0
+
+saved results/figures/qc_pca.png, results/tables/sample_qc.tsv and data/interim/*.parquet
+caffeinate -i .venv/bin/python scripts/03d_filter_meth_autosomal.py
+probes in matrix: 486427
+  not in probe map (unannotated): 90442
+  in map, chrX: 9779, chrY: 362, no chrom: 35
+  kept (autosomal, annotated): 385809
+
+autosomal probes complete in all samples: 292080 of 385809
+PCA of top-20000-variance complete autosomal probes (outcome-blind):
+ PC   var%  R2_tss  R2_sex R2_stage
+  1   22.6   0.034   0.013    0.013
+  2    9.7   0.062   0.049    0.012
+  3    3.4   0.072   0.001    0.001
+  4    2.6   0.051   0.002    0.011
+  5    2.4   0.044   0.014    0.002
+.venv/bin/python scripts/04_clinical_baseline.py
+core cohort: n=442, OS events=159, tau=1825 d
+
+== Repeated 5x5 CV, identical folds for all models (n_train~354, n_test~88)
+mean [95% CI, Nadeau-Bengio] (SD across folds)
+  harrell  age+sex                  0.471 [0.415, 0.527] (SD 0.051)
+  harrell  stage                    0.659 [0.616, 0.702] (SD 0.039)
+  harrell  age+sex+stage            0.657 [0.607, 0.707] (SD 0.045)
+  harrell  age+sex+stage+smoking    0.645 [0.600, 0.690] (SD 0.041)
+  uno      age+sex                  0.469 [0.410, 0.527] (SD 0.053)
+  uno      stage                    0.625 [0.580, 0.670] (SD 0.040)
+  uno      age+sex+stage            0.636 [0.586, 0.686] (SD 0.045)
+  uno      age+sex+stage+smoking    0.622 [0.572, 0.671] (SD 0.044)
+
+== Paired differences (same folds)
+  harrell  age+sex+stage - age+sex: +0.186 [+0.121, +0.251] p=0.000
+  uno      age+sex+stage - age+sex: +0.168 [+0.100, +0.235] p=0.000
+  harrell  age+sex+stage+smoking - age+sex+stage: -0.012 [-0.033, +0.009] p=0.259
+  uno      age+sex+stage+smoking - age+sex+stage: -0.015 [-0.040, +0.011] p=0.253
+
+== Full-data Cox (n=427, events=155; stage ref = I; descriptive)
+            exp(coef)  exp(coef) lower 95%  exp(coef) upper 95%      p
+covariate                                                             
+age_per10y      1.065                0.908                1.249  0.437
+male            1.014                0.734                1.403  0.931
+stage_II        2.069                1.397                3.065  0.000
+stage_III       3.015                1.997                4.551  0.000
+stage_IV        3.444                1.893                6.264  0.000
+
+== Proportional-hazards test (Schoenfeld, rank time)
+            test_statistic      p
+age_per10y           0.029  0.864
+male                 5.343  0.021
+stage_II             3.426  0.064
+stage_III            6.376  0.012
+stage_IV             0.164  0.685
+
+log-rank across stages: chi2=39.7, p=1.24e-08; saved results/figures/km_stage.png
+for l in rna mirna meth; do caffeinate -i .venv/bin/python scripts/05_single_omics.py $l || exit 1; done
+[Parallel(n_jobs=4)]: Using backend LokyBackend with 4 concurrent workers.
+rna: X=(442, 60660) events=159 k_screen=1000; prevalence: >1.0 in >=20% of train
+[Parallel(n_jobs=4)]: Done  10 tasks      | elapsed:    8.9s
+[Parallel(n_jobs=4)]: Done  25 out of  25 | elapsed:   18.7s finished
+
+folds ok: 25/25; fits that errored inside folds: 0
+
+== rna: omics-only elastic-net Cox, repeated 5x5 CV, nested tuning
+  harrell  0.623 [0.569, 0.677] (SD 0.048)
+  uno      0.572 [0.510, 0.635] (SD 0.056)
+  inner-CV C (selected) mean 0.622; l1 chosen: {0.1: np.int64(11), 0.5: np.int64(8), 0.9: np.int64(6)}
+  non-zero features per fold: median 13 (range 1-94); features passing filter: median 17680
+  features selected in >=50% of outer folds: 4; >=20%: 16; ever: 223
+  top 10: ENSG00000107984.10(1.00), ENSG00000196781.16(0.76), ENSG00000011426.11(0.60), ENSG00000100522.10(0.52), ENSG00000272106.1(0.44), ENSG00000179241.13(0.44), ENSG00000021300.14(0.40), ENSG00000197930.13(0.32), ENSG00000121104.8(0.32), ENSG00000245694.10(0.24)
+saved results/tables/single_omics_rna_*.tsv and results/models/oof_risk_rna.parquet
+[Parallel(n_jobs=4)]: Using backend LokyBackend with 4 concurrent workers.
+mirna: X=(442, 1881) events=159 k_screen=300; prevalence: >0.0 in >=20% of train
+[Parallel(n_jobs=4)]: Done  10 tasks      | elapsed:    4.8s
+[Parallel(n_jobs=4)]: Done  25 out of  25 | elapsed:    9.0s finished
+
+folds ok: 25/25; fits that errored inside folds: 0
+
+== mirna: omics-only elastic-net Cox, repeated 5x5 CV, nested tuning
+  harrell  0.624 [0.558, 0.690] (SD 0.059)
+  uno      0.603 [0.537, 0.669] (SD 0.059)
+  inner-CV C (selected) mean 0.626; l1 chosen: {0.1: np.int64(16), 0.5: np.int64(6), 0.9: np.int64(3)}
+  non-zero features per fold: median 101 (range 1-148); features passing filter: median 896
+  features selected in >=50% of outer folds: 72; >=20%: 171; ever: 421
+  top 10: hsa-mir-1293(0.96), hsa-mir-132(0.96), hsa-mir-5571(0.96), hsa-mir-31(0.96), hsa-mir-3158-2(0.96), hsa-mir-3653(0.96), hsa-mir-6885(0.92), hsa-mir-1913(0.92), hsa-mir-5582(0.92), hsa-mir-548v(0.92)
+saved results/tables/single_omics_mirna_*.tsv and results/models/oof_risk_mirna.parquet
+[Parallel(n_jobs=4)]: Using backend LokyBackend with 4 concurrent workers.
+meth: X=(442, 385809) events=159 k_screen=2000; drop probes with >10% missing in train, median-impute
+[Parallel(n_jobs=4)]: Done  10 tasks      | elapsed:  3.4min
+[Parallel(n_jobs=4)]: Done  25 out of  25 | elapsed:  7.5min finished
+
+folds ok: 25/25; fits that errored inside folds: 0
+
+== meth: omics-only elastic-net Cox, repeated 5x5 CV, nested tuning
+  harrell  0.600 [0.539, 0.661] (SD 0.055)
+  uno      0.565 [0.510, 0.621] (SD 0.050)
+  inner-CV C (selected) mean 0.609; l1 chosen: {0.1: np.int64(17), 0.9: np.int64(6), 0.5: np.int64(2)}
+  non-zero features per fold: median 34 (range 0-251); features passing filter: median 347576
+  features selected in >=50% of outer folds: 8; >=20%: 62; ever: 812
+  top 10: cg03923535(0.88), cg07081759(0.76), cg20268054(0.68), cg27018309(0.68), cg26709300(0.68), cg25229048(0.64), cg16404170(0.60), cg13297560(0.52), cg24662823(0.48), cg18140857(0.48)
+saved results/tables/single_omics_meth_*.tsv and results/models/oof_risk_meth.parquet
+.venv/bin/python scripts/06_compare_diagnostics.py
+== Paired difference vs clinical baseline (age+sex+stage), identical folds, Nadeau-Bengio 95% CI
+  rna    harrell  omics 0.623 vs clinical 0.657: diff -0.034 [-0.109, +0.041] p=0.356
+  rna    uno      omics 0.572 vs clinical 0.636: diff -0.064 [-0.145, +0.017] p=0.117
+  mirna  harrell  omics 0.624 vs clinical 0.657: diff -0.033 [-0.114, +0.048] p=0.404
+  mirna  uno      omics 0.603 vs clinical 0.636: diff -0.033 [-0.107, +0.040] p=0.360
+  meth   harrell  omics 0.600 vs clinical 0.657: diff -0.057 [-0.145, +0.030] p=0.189
+  meth   uno      omics 0.565 vs clinical 0.636: diff -0.071 [-0.148, +0.006] p=0.069
+
+== Rule-9 diagnostics on out-of-fold risk (z-scored within each test fold; median over 5 repeats)
+   chance level for R2 by TSS group ~ 0.029
+  rna    rho(risk, stage)=+0.11  R2(risk by TSS)=0.049
+         HR per SD of risk: raw 1.48 (p=1.8e-07) | adj stage 1.39 (p=1.1e-05) | adj stage + strat TSS 1.42 (p=1.5e-05)
+  mirna  rho(risk, stage)=+0.23  R2(risk by TSS)=0.046
+         HR per SD of risk: raw 1.48 (p=1.1e-07) | adj stage 1.35 (p=0.00012) | adj stage + strat TSS 1.32 (p=0.00091)
+  meth   rho(risk, stage)=+0.17  R2(risk by TSS)=0.040
+         HR per SD of risk: raw 1.32 (p=0.0001) | adj stage 1.28 (p=0.0016) | adj stage + strat TSS 1.29 (p=0.0016)
+for l in rna mirna meth all; do caffeinate -i .venv/bin/python scripts/07_clinical_plus_omics.py $l || exit 1; done
+[Parallel(n_jobs=4)]: Using backend LokyBackend with 4 concurrent workers.
+clinical + rna: blocks [('clin', 5), ('rna', 60660)]; events=159; clinical block unpenalised, omics penalised (l1 grid [0.1, 0.5, 0.9])
+[Parallel(n_jobs=4)]: Done  10 tasks      | elapsed:   10.1s
+[Parallel(n_jobs=4)]: Done  25 out of  25 | elapsed:   21.2s finished
+
+folds ok: 25/25; fits that errored inside folds: 0
+
+== clinical + rna: repeated 5x5 CV, nested tuning, identical folds
+  harrell  0.686 [0.638, 0.734] | clinical-only 0.657 | diff +0.029 [+0.005, +0.053] p=0.020
+  uno      0.648 [0.589, 0.707] | clinical-only 0.636 | diff +0.012 [-0.026, +0.050] p=0.531
+  >> internal criterion (Uno diff CI excludes 0 and > 0): NOT met
+  inner-CV C (selected) mean 0.682; l1 chosen: {0.9: np.int64(14), 0.5: np.int64(6), 0.1: np.int64(5)}
+  penalised non-zero omics features per fold: median 6 (range 2-113)
+  omics features selected in >=50% of folds: 2; >=20%: 10; ever: 173
+  top 10: ENSG00000196781.16(1.00), ENSG00000107984.10(0.96), ENSG00000011426.11(0.28), ENSG00000179241.13(0.28), ENSG00000057294.15(0.24), ENSG00000134333.14(0.20), ENSG00000213080.3(0.20), ENSG00000163932.15(0.20), ENSG00000227403.2(0.20), ENSG00000132432.14(0.20)
+saved results/tables/combo_rna_*.tsv and results/models/oof_risk_combo_rna.parquet
+[Parallel(n_jobs=4)]: Using backend LokyBackend with 4 concurrent workers.
+clinical + mirna: blocks [('clin', 5), ('mirna', 1881)]; events=159; clinical block unpenalised, omics penalised (l1 grid [0.1, 0.5, 0.9])
+[Parallel(n_jobs=4)]: Done  10 tasks      | elapsed:    6.1s
+[Parallel(n_jobs=4)]: Done  25 out of  25 | elapsed:   12.3s finished
+
+folds ok: 25/25; fits that errored inside folds: 0
+
+== clinical + mirna: repeated 5x5 CV, nested tuning, identical folds
+  harrell  0.660 [0.611, 0.708] | clinical-only 0.657 | diff +0.002 [-0.033, +0.038] p=0.894
+  uno      0.626 [0.565, 0.686] | clinical-only 0.636 | diff -0.011 [-0.045, +0.024] p=0.529
+  >> internal criterion (Uno diff CI excludes 0 and > 0): NOT met
+  inner-CV C (selected) mean 0.674; l1 chosen: {0.1: np.int64(12), 0.5: np.int64(8), 0.9: np.int64(5)}
+  penalised non-zero omics features per fold: median 40 (range 0-120)
+  omics features selected in >=50% of folds: 20; >=20%: 91; ever: 268
+  top 10: hsa-mir-31(0.92), hsa-mir-5582(0.76), hsa-mir-3158-2(0.76), hsa-mir-3653(0.76), hsa-mir-3117(0.72), hsa-mir-6501(0.72), hsa-mir-6885(0.68), hsa-mir-299(0.68), hsa-mir-5571(0.64), hsa-mir-4423(0.64)
+saved results/tables/combo_mirna_*.tsv and results/models/oof_risk_combo_mirna.parquet
+[Parallel(n_jobs=4)]: Using backend LokyBackend with 4 concurrent workers.
+clinical + meth: blocks [('clin', 5), ('meth', 385809)]; events=159; clinical block unpenalised, omics penalised (l1 grid [0.1, 0.5, 0.9])
+[Parallel(n_jobs=4)]: Done  10 tasks      | elapsed:  4.4min
+[Parallel(n_jobs=4)]: Done  25 out of  25 | elapsed:  8.7min finished
+
+folds ok: 25/25; fits that errored inside folds: 0
+
+== clinical + meth: repeated 5x5 CV, nested tuning, identical folds
+  harrell  0.668 [0.622, 0.713] | clinical-only 0.657 | diff +0.010 [-0.018, +0.039] p=0.460
+  uno      0.632 [0.577, 0.688] | clinical-only 0.636 | diff -0.004 [-0.038, +0.031] p=0.824
+  >> internal criterion (Uno diff CI excludes 0 and > 0): NOT met
+  inner-CV C (selected) mean 0.677; l1 chosen: {0.1: np.int64(14), 0.5: np.int64(8), 0.9: np.int64(3)}
+  penalised non-zero omics features per fold: median 37 (range 3-154)
+  omics features selected in >=50% of folds: 17; >=20%: 60; ever: 749
+  top 10: cg16404170(0.84), cg07081759(0.84), cg18140857(0.72), cg24662823(0.68), cg00161124(0.68), cg13297560(0.68), cg14139311(0.60), cg01514357(0.60), cg06533196(0.60), cg26475594(0.56)
+saved results/tables/combo_meth_*.tsv and results/models/oof_risk_combo_meth.parquet
+[Parallel(n_jobs=4)]: Using backend LokyBackend with 4 concurrent workers.
+clinical + all: blocks [('clin', 5), ('rna', 60660), ('mirna', 1881), ('meth', 385809)]; events=159; clinical block unpenalised, omics penalised (l1 grid [0.1, 0.5, 0.9])
+[Parallel(n_jobs=4)]: Done  10 tasks      | elapsed:  4.4min
+[Parallel(n_jobs=4)]: Done  25 out of  25 | elapsed:  8.5min finished
+
+folds ok: 25/25; fits that errored inside folds: 0
+
+== clinical + all: repeated 5x5 CV, nested tuning, identical folds
+  harrell  0.676 [0.630, 0.721] | clinical-only 0.657 | diff +0.018 [-0.008, +0.044] p=0.162
+  uno      0.636 [0.583, 0.689] | clinical-only 0.636 | diff -0.000 [-0.030, +0.030] p=0.996
+  >> internal criterion (Uno diff CI excludes 0 and > 0): NOT met
+  inner-CV C (selected) mean 0.680; l1 chosen: {0.1: np.int64(11), 0.9: np.int64(9), 0.5: np.int64(5)}
+  penalised non-zero omics features per fold: median 27 (range 3-160)
+  omics features selected in >=50% of folds: 10; >=20%: 40; ever: 588
+  top 10: ENSG00000107984.10(0.88), ENSG00000196781.16(0.84), cg07081759(0.68), cg01514357(0.60), cg16404170(0.60), cg00161124(0.60), cg24662823(0.60), cg13297560(0.56), cg18140857(0.52), cg06533196(0.52)
+saved results/tables/combo_all_*.tsv and results/models/oof_risk_combo_all.parquet
+caffeinate -i .venv/bin/python scripts/08_late_integration.py
+[Parallel(n_jobs=4)]: Using backend LokyBackend with 4 concurrent workers.
+late integration: layers ['rna', 'mirna', 'meth'] + clinical (age, male, stage II/III/IV) stacked in a small Cox; events=159
+[Parallel(n_jobs=4)]: Done  10 tasks      | elapsed:  4.1min
+[Parallel(n_jobs=4)]: Done  25 out of  25 | elapsed:  8.5min finished
+
+folds ok: 25/25; fits that errored inside folds: 0
+
+== late integration (stacking), repeated 5x5 CV, identical folds
+  harrell  0.672 [0.625, 0.719]
+           vs clinical-only          (0.657): diff +0.015 [-0.020, +0.049] p=0.383
+           vs early clinical+rna     (0.686): diff -0.014 [-0.044, +0.016] p=0.339
+           vs early clinical+all     (0.676): diff -0.003 [-0.026, +0.019] p=0.748
+  uno      0.634 [0.581, 0.688]
+           vs clinical-only          (0.636): diff -0.002 [-0.040, +0.035] p=0.908
+           vs early clinical+rna     (0.648): diff -0.014 [-0.052, +0.025] p=0.468
+           vs early clinical+all     (0.636): diff -0.002 [-0.031, +0.026] p=0.884
+  >> internal criterion (Uno diff vs clinical-only CI excludes 0 and > 0): NOT met
+
+  stacker coefficients on standardised inputs (mean over folds; share of folds with positive sign):
+    age       +0.102   positive in 96% of folds
+    male      -0.027   positive in 24% of folds
+    stage_II  +0.323   positive in 100% of folds
+    stage_III +0.377   positive in 100% of folds
+    stage_IV  +0.250   positive in 100% of folds
+    rna       +0.139   positive in 84% of folds
+    mirna     +0.222   positive in 92% of folds
+    meth      +0.036   positive in 60% of folds
+  per-layer omics-only Harrell C inside this run: {'rna': 0.623, 'mirna': 0.624, 'meth': 0.6}
+saved results/tables/late_integration_folds.tsv and results/models/oof_risk_late.parquet
+caffeinate -i .venv/bin/python scripts/09_nonlinear.py
+[Parallel(n_jobs=4)]: Using backend LokyBackend with 4 concurrent workers.
+non-linear comparators; hyperparameters fixed in config: {'rsf_omics': {'n_estimators': 500, 'min_samples_leaf': 15, 'max_features': 'sqrt'}, 'rsf_clin': {'n_estimators': 500, 'min_samples_leaf': 15, 'max_features': None}, 'gbm_omics': {'n_estimators': 200, 'learning_rate': 0.05, 'max_depth': 2, 'subsample': 0.7, 'max_features': 'sqrt'}}
+[Parallel(n_jobs=4)]: Done  10 tasks      | elapsed:  2.3min
+[Parallel(n_jobs=4)]: Done  25 out of  25 | elapsed:  5.3min finished
+
+folds ok: 25/25
+
+== non-linear comparators, repeated 5x5 CV, identical folds, no tuning
+  RSF clinical         harrell  0.645 [0.596, 0.693] | vs clinical Cox: -0.013 [-0.054, +0.029] | vs early clinical+rna: -0.041 [-0.085, +0.002]
+  RSF clinical         uno      0.607 [0.550, 0.665] | vs clinical Cox: -0.029 [-0.071, +0.013] | vs early clinical+rna: -0.041 [-0.096, +0.015]
+  RSF clinical+omics   harrell  0.625 [0.576, 0.673] | vs clinical Cox: -0.032 [-0.107, +0.042] | vs early clinical+rna: -0.061 [-0.131, +0.008]
+  RSF clinical+omics   uno      0.579 [0.525, 0.633] | vs clinical Cox: -0.057 [-0.136, +0.021] | vs early clinical+rna: -0.069 [-0.149, +0.011]
+  GBM clinical+omics   harrell  0.618 [0.564, 0.671] | vs clinical Cox: -0.040 [-0.119, +0.040] | vs early clinical+rna: -0.068 [-0.143, +0.006]
+  GBM clinical+omics   uno      0.574 [0.523, 0.625] | vs clinical Cox: -0.062 [-0.140, +0.015] | vs early clinical+rna: -0.074 [-0.152, +0.004]
+
+  GBM mean feature importance, top 12: cg20268054(0.004), cg13862848(0.004), cg04294383(0.003), cg11940526(0.003), cg27018309(0.003), cg07081759(0.003), cg26475594(0.003), cg03942855(0.003), cg26608667(0.003), cg09743906(0.003), cg10347859(0.002), cg14139311(0.002)
+caffeinate -i .venv/bin/python scripts/10_mofa.py
+[Parallel(n_jobs=4)]: Using backend LokyBackend with 4 concurrent workers.
+MOFA+ -> Cox; fixed settings: {'n_factors': 8, 'cox_alpha': 0.01, 'iterations': 1000, 'convergence_mode': 'fast'}
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 45 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 43 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 44 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 42 ##
+######################################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 49 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 46 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 47 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 48 ##
+######################################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 51 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 50 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 53 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 52 ##
+######################################
+
+
+[Parallel(n_jobs=4)]: Done  10 tasks      | elapsed:  1.2min
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 55 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 56 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 54 ##
+######################################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 57 ##
+######################################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 60 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 59 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 61 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 58 ##
+######################################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 64 ##
+######################################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 63 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 62 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 65 ##
+######################################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 66 ##
+######################################
+
+
+[Parallel(n_jobs=4)]: Done  25 out of  25 | elapsed:  2.8min finished
+
+== MOFA+ factors -> Cox, repeated 5x5 CV, identical folds, no tuning
+  MOFA factors             harrell  0.605 [0.547, 0.663] | vs clinical Cox: -0.053 [-0.135, +0.030] | vs early clinical+rna: -0.082 [-0.156, -0.007]
+  MOFA factors             uno      0.568 [0.512, 0.624] | vs clinical Cox: -0.068 [-0.149, +0.013] | vs early clinical+rna: -0.080 [-0.156, -0.004]
+  clinical + MOFA factors  harrell  0.651 [0.609, 0.693] | vs clinical Cox: -0.006 [-0.063, +0.050] | vs early clinical+rna: -0.035 [-0.084, +0.014]
+  clinical + MOFA factors  uno      0.613 [0.561, 0.665] | vs clinical Cox: -0.023 [-0.080, +0.034] | vs early clinical+rna: -0.035 [-0.082, +0.012]
+
+  factor Cox coefficients (clinical + MOFA), mean | share positive:
+    F1: -0.376 | 12%
+    F2: -0.080 | 24%
+    F3: -0.030 | 44%
+    F4: -0.043 | 40%
+    F5: -0.035 | 40%
+    F6: +0.046 | 64%
+    F7: -0.041 | 44%
+    F8: -0.012 | 40%
+  features per view (fold 0): {'rna': 1000, 'mirna': 300, 'meth': 2000}
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+.venv/bin/python scripts/11_m7a_discrimination.py
+== discrimination from OOF risks (mean over 5 repeats; 95% patient-bootstrap CI, 300 draws)
+  clinical-only   Uno C (5y)  0.622 [0.573, 0.662]
+  clinical-only   AUC 1y      0.667 [0.577, 0.749]
+  clinical-only   AUC 3y      0.671 [0.593, 0.736]
+  clinical-only   AUC 5y      0.673 [0.587, 0.740]
+  clinical + RNA  Uno C (5y)  0.642 [0.591, 0.686]
+  clinical + RNA  AUC 1y      0.711 [0.630, 0.785]
+  clinical + RNA  AUC 3y      0.697 [0.623, 0.769]
+  clinical + RNA  AUC 5y      0.687 [0.594, 0.757]
+  paired difference (clinical + RNA minus clinical-only):
+    Uno C (5y)  +0.020 [+0.001, +0.038]
+    AUC 1y      +0.044 [+0.019, +0.074]
+    AUC 3y      +0.026 [-0.005, +0.054]
+    AUC 5y      +0.014 [-0.018, +0.043]
+  pooled-OOF Harrell C (sanity vs fold means 0.657 / 0.686): {'clinical-only': np.float64(0.645), 'clinical + RNA': np.float64(0.678)}
+
+== risk groups: median split of OOF risk (exploratory; frozen cutoff comes in M8)
+  clinical-only   HR high vs low: per-repeat median 2.49 (range 2.31-2.81); repeat-averaged score 2.84 [2.03, 3.97], log-rank p=2.04e-10; per-repeat log-rank p median 1.94e-08
+  clinical + RNA  HR high vs low: per-repeat median 2.73 (range 2.34-2.91); repeat-averaged score 2.76 [1.97, 3.85], log-rank p=6.2e-10; per-repeat log-rank p median 8e-10
+
+saved results/tables/m7a_discrimination.tsv and results/figures/km_risk_groups_oof.png
+.venv/bin/python scripts/12_m7b_calibration.py
+== calibration slope of OOF linear predictor (1 = well calibrated; <1 = over-fit)
+  clinical-only   slope median 0.84 (range 0.74-0.92); median 95% CI [0.56, 1.11]
+  clinical + RNA  slope median 0.97 (range 0.73-0.98); median 95% CI [0.70, 1.24]
+
+== added value: Cox(clinical OOF) vs Cox(clinical OOF + clinical+RNA OOF), LR test, 1 df
+  LR p per repeat: median 0.000459 (range 2.6e-08-0.0293); coef of RNA-model score +1.70
+
+== Brier score (lower = better) and integrated Brier 1-5y, vs null KM model; mean over repeats
+  clinical-only   Brier 1y/3y/5y: 0.103 / 0.212 / 0.221  IBS 0.198  (null: 0.108 / 0.232 / 0.241; IBS 0.213)
+  clinical + RNA  Brier 1y/3y/5y: 0.101 / 0.207 / 0.219  IBS 0.193  (null: 0.108 / 0.232 / 0.241; IBS 0.213)
+
+== calibration at 5y (quintiles of predicted 5y event risk; recalibrated on OOF) and decision curve
+  clinical-only   predicted vs observed 5y event risk by quintile: 0.43/0.37, 0.45/0.47, 0.52/0.68, 0.71/0.63, 0.82/0.79
+  clinical + RNA  predicted vs observed 5y event risk by quintile: 0.39/0.40, 0.43/0.47, 0.53/0.64, 0.71/0.67, 0.86/0.79
+  net benefit at threshold 0.3: clinical-only 0.420, clinical + RNA 0.420, treat-all 0.420
+  net benefit at threshold 0.4: clinical-only 0.316, clinical + RNA 0.336, treat-all 0.323
+  net benefit at threshold 0.5: clinical-only 0.224, clinical + RNA 0.230, treat-all 0.188
+
+== proportional hazards (Schoenfeld, rank time) for the standardised score, and 5y RMST by risk group
+  clinical-only   PH p=0.082; HR per SD 1.57; 5y RMST low-minus-high 417 days [314, 532]
+  clinical + RNA  PH p=0.026; HR per SD 1.73; 5y RMST low-minus-high 410 days [315, 533]
+
+saved results/figures/m7b_calibration_dca.png and results/models/oof_risk_clinical.parquet
+.venv/bin/python scripts/13_shared_gene_pool.py
+TCGA RNA features 60660; with a symbol 60660; unique symbols 59427
+
+GPL570: 54675 probes, 42986 with a single gene symbol; gse31210 matrix (54675, 246); values: min 0.06, median 99.56, p99 11103.14, max 53813.79, NaN 0.0000
+  probes matched to matrix rows 42986; unique symbols 21653
+
+GPL96: 22283 probes, 19820 with a single gene symbol; gse68465 matrix (22283, 462); values: min 0.06, median 207.33, p99 11425.81, max 130623.00, NaN 0.0000
+  probes matched to matrix rows 19820; unique symbols 12547
+
+shared symbols: TCGA ∩ GPL570 ∩ GPL96 = 11753
+share of total TCGA RNA variance in shared genes: 0.56; of TCGA features: 0.19
+saved results/tables/shared_gene_map.tsv, data/interim/gse31210_gene.parquet, data/interim/gse68465_gene.parquet
+caffeinate -i .venv/bin/python scripts/14_combo_rna_shared.py
+[Parallel(n_jobs=4)]: Using backend LokyBackend with 4 concurrent workers.
+clinical + rnashared: blocks [('clin', 5), ('rna', 11753)]; events=159; clinical block unpenalised, omics penalised (l1 grid [0.1, 0.5, 0.9])
+[Parallel(n_jobs=4)]: Done  10 tasks      | elapsed:    9.7s
+[Parallel(n_jobs=4)]: Done  25 out of  25 | elapsed:   20.2s finished
+
+folds ok: 25/25; fits that errored inside folds: 0
+
+== clinical + rnashared: repeated 5x5 CV, nested tuning, identical folds
+  harrell  0.690 [0.648, 0.732] | clinical-only 0.657 | diff +0.033 [+0.006, +0.060] p=0.019
+  uno      0.650 [0.596, 0.704] | clinical-only 0.636 | diff +0.014 [-0.023, +0.051] p=0.443
+  >> internal criterion (Uno diff CI excludes 0 and > 0): NOT met
+  inner-CV C (selected) mean 0.687; l1 chosen: {0.9: np.int64(17), 0.1: np.int64(4), 0.5: np.int64(4)}
+  penalised non-zero omics features per fold: median 7 (range 2-102)
+  omics features selected in >=50% of folds: 2; >=20%: 9; ever: 149
+  top 10: DKK1(1.00), TLE1(1.00), PKP2(0.40), SEC61G(0.28), SMS(0.24), USP4(0.24), DAAM2(0.20), PRKCD(0.20), LDHA(0.20), CCR2(0.16)
+saved results/tables/combo_rnashared_*.tsv and results/models/oof_risk_combo_rnashared.parquet
+
+== cost of restricting RNA to the shared pool (paired, same folds): shared minus full-pool clinical+RNA
+  harrell  full 0.686 -> shared 0.690; diff +0.004 [-0.010, +0.018]
+  uno      full 0.648 -> shared 0.650; diff +0.002 [-0.010, +0.014]
+.venv/bin/python scripts/15_freeze_signature.py signature_v1.repro.json
+final fit on 442 patients / 159 events: l1=0.9, alpha=0.1049, inner-CV Harrell 0.700
+RNA genes kept after screening/prevalence: 1000; non-zero in final model: 5
+clinical coefficients (per SD): {'age': 0.064, 'male': -0.011, 'stage_II': 0.344, 'stage_III': 0.43, 'stage_IV': 0.291}
+RNA genes (coef per SD of z-scored expression):
+   DKK1         +0.148
+   TLE1         +0.116
+   SEC61G       +0.019
+   LDHA         +0.010
+   USP4         -0.009
+apparent (training) Harrell C 0.725  [optimistic; honest estimate is the CV 0.690 / Uno 0.650]
+frozen cutoff = TCGA median lp -0.166; lp SD 0.583
+signature saved: results/models/signature_v1.repro.json
+sha256 704878c704c0b13e3c1f4e3fb3e7671bf411eae7e13611f19342a47c8cd48041
+.venv/bin/python scripts/18_verify_and_summarize.py verify
+signature reproduction: bit-identical file
+OK: the frozen signature is reproduced from raw data.
+.venv/bin/python scripts/16_prepare_external.py
+== GSE31210
+  tissue: {'primary lung tumor': 226, 'normal lung': 20}
+  pathological stage values: {'IA': 114, 'II': 58, 'IB': 54}
+  exclusion field values: {'none': 204, 'exclude': 22, '(absent)': 20}
+  expression after log2(x+1): genes 11753, samples 226, median 9.15, p1 1.94, p99 14.07
+  tumours 226 (pre-specified 226); deaths 35 (35); flagged 22 (22) -> sensitivity set 204 (204)
+  age 30-76, male 46%, stage {'I': 168, 'II': 58}, median follow-up 4.8y, missing age/time 0/0
+
+== GSE68465
+  disease_state: {'Lung Adenocarcinoma': 443, 'Normal': 19}
+  disease_stage examples: {'pN0pT2': 162, 'pN0pT1': 114, 'pN1pT2': 55, 'pN2pT2': 34, 'pN1pT1': 24, 'pN0pT3': 16, 'pN2pT1': 11, 'pN0pT4': 7, 'pN1pT3': 7, 'pN2pT3': 5, 'pN2pT4': 3, 'pN1pT4': 2}
+  unparsed disease_stage: 22; derived stage (all samples): {'I': 276, 'II': 95, 'III': 69, nan: 22}
+  expression after log2(x+1): genes 11753, samples 443, median 8.21, p1 2.50, p99 13.25
+  adenocarcinomas 443 (pre-specified 442); deaths 236; adjuvant chemo 89
+  age 33-87, male 50%, stage {'I': 276, 'II': 95, 'III': 69, nan: 3}, median follow-up 3.9y, missing age/time 0/1
+
+saved data/processed/gse*_cohort.parquet and data/interim/gse*_gene_log2.parquet (signature NOT scored)
+.venv/bin/python scripts/17_external_validation.py --rerun
+signature_v1 verified (sha256 704878c704c0...); genes ['DKK1', 'TLE1', 'LDHA', 'USP4', 'SEC61G']; frozen cutoff -0.166
+
+--- GSE31210 primary: n=226, events=35
+  full signature           Harrell C 0.715 [0.627, 0.792]; Uno C(5y) 0.682; HR per SD 1.88 [1.40, 2.53] p=3.17e-05
+  RNA component only       Harrell C 0.522 [0.411, 0.631]; Uno C(5y) 0.523; HR per SD 1.20 [0.86, 1.67] p=0.275
+  clinical component only  Harrell C 0.693 [0.591, 0.786]; Uno C(5y) 0.654; HR per SD 1.91 [1.43, 2.55] p=1.35e-05
+  calibration slope of the full score 1.52 [0.81, 2.24]
+  high vs low, frozen TCGA cutoff: 70 high / 156 low; HR 4.36 [2.21, 8.60] Cox p=2.09e-05, log-rank p=3.44e-06
+  high vs low, within-cohort median: 113 high / 113 low; HR 4.06 [1.84, 8.94] Cox p=0.000515, log-rank p=0.00017
+  added value of RNA component over clinical component: coef +0.45, LR p=0.616
+  criteria: C>0.60 & lower CI>0.50: MET; HR>1 & p<0.05 (frozen cutoff): MET; calibration slope within 1±0.3: no
+
+--- GSE31210 sensitivity (204, flagged excluded): n=204, events=30
+  full signature           Harrell C 0.715 [0.608, 0.811]; Uno C(5y) 0.681; HR per SD 1.89 [1.40, 2.57] p=4.11e-05
+  RNA component only       Harrell C 0.556 [0.450, 0.671]; Uno C(5y) 0.554; HR per SD 1.34 [0.94, 1.91] p=0.11
+  clinical component only  Harrell C 0.681 [0.562, 0.787]; Uno C(5y) 0.641; HR per SD 1.83 [1.36, 2.44] p=4.94e-05
+  calibration slope of the full score 1.62 [0.85, 2.39]
+  high vs low, frozen TCGA cutoff: 54 high / 150 low; HR 4.40 [2.13, 9.07] Cox p=6.09e-05, log-rank p=1.19e-05
+  high vs low, within-cohort median: 102 high / 102 low; HR 3.81 [1.63, 8.88] Cox p=0.00199, log-rank p=0.000883
+  added value of RNA component over clinical component: coef +1.03, LR p=0.286
+  criteria: C>0.60 & lower CI>0.50: MET; HR>1 & p<0.05 (frozen cutoff): MET; calibration slope within 1±0.3: no
+
+--- GSE68465 primary (adenocarcinoma with follow-up): n=442, events=236
+  full signature           Harrell C 0.697 [0.661, 0.734]; Uno C(5y) 0.698; HR per SD 1.95 [1.71, 2.21] p=5.08e-24
+  RNA component only       Harrell C 0.574 [0.534, 0.611]; Uno C(5y) 0.573; HR per SD 1.24 [1.09, 1.40] p=0.00107
+  clinical component only  Harrell C 0.691 [0.657, 0.725]; Uno C(5y) 0.690; HR per SD 1.85 [1.63, 2.09] p=2.69e-22
+  calibration slope of the full score 1.24 [1.00, 1.47]
+  high vs low, frozen TCGA cutoff: 188 high / 254 low; HR 2.90 [2.23, 3.77] Cox p=1.45e-15, log-rank p=6.97e-17
+  high vs low, within-cohort median: 221 high / 221 low; HR 2.46 [1.88, 3.21] Cox p=4.39e-11, log-rank p=9.92e-12
+  added value of RNA component over clinical component: coef +0.99, LR p=0.00204
+  HR per SD adjusted for adjuvant chemotherapy: 1.92 [1.68, 2.19] p=3.89e-22
+  criteria: C>0.60 & lower CI>0.50: MET; HR>1 & p<0.05 (frozen cutoff): MET; calibration slope within 1±0.3: yes
+
+saved results/tables/external_validation.tsv and results/figures/external_km.png
+.venv/bin/python scripts/18_verify_and_summarize.py summary
+== internal repeated 5x5 CV (identical folds; Nadeau-Bengio CIs, nominal fold sizes)
+                          model   uno         uno_ci    uno_diff_vs_clinical  harrell harrell_diff_vs_clinical
+              clinical: age+sex 0.469 [0.410, 0.527] -0.168 [-0.235, -0.100]    0.471  -0.186 [-0.251, -0.121]
+        clinical: age+sex+stage 0.636 [0.586, 0.686] +0.000 [+0.000, +0.000]    0.657  +0.000 [+0.000, +0.000]
+clinical: age+sex+stage+smoking 0.622 [0.572, 0.671] -0.015 [-0.040, +0.011]    0.645  -0.012 [-0.033, +0.009]
+                clinical: stage 0.625 [0.580, 0.670] -0.011 [-0.043, +0.020]    0.659  +0.002 [-0.021, +0.025]
+                       rna only 0.572 [0.511, 0.634] -0.064 [-0.144, +0.017]    0.623  -0.034 [-0.108, +0.040]
+                     mirna only 0.603 [0.537, 0.669] -0.033 [-0.106, +0.040]    0.624  -0.033 [-0.114, +0.047]
+                      meth only 0.565 [0.510, 0.620] -0.071 [-0.147, +0.006]    0.600  -0.057 [-0.145, +0.030]
+          early: clinical + rna 0.648 [0.590, 0.706] +0.012 [-0.026, +0.049]    0.686  +0.029 [+0.005, +0.053]
+        early: clinical + mirna 0.626 [0.565, 0.686] -0.011 [-0.045, +0.024]    0.660  +0.002 [-0.033, +0.038]
+         early: clinical + meth 0.632 [0.577, 0.687] -0.004 [-0.038, +0.031]    0.668  +0.010 [-0.018, +0.039]
+          early: clinical + all 0.636 [0.584, 0.689] -0.000 [-0.030, +0.030]    0.676  +0.018 [-0.008, +0.044]
+    early: clinical + rnashared 0.650 [0.596, 0.704] +0.014 [-0.023, +0.051]    0.690  +0.033 [+0.006, +0.060]
+                  late stacking 0.634 [0.581, 0.687] -0.002 [-0.039, +0.035]    0.672  +0.015 [-0.019, +0.049]
+             GBM clinical+omics 0.574 [0.523, 0.625] -0.062 [-0.139, +0.015]    0.618  -0.040 [-0.119, +0.040]
+                   RSF clinical 0.607 [0.550, 0.664] -0.029 [-0.070, +0.012]    0.645  -0.013 [-0.054, +0.029]
+             RSF clinical+omics 0.579 [0.526, 0.632] -0.057 [-0.135, +0.021]    0.625  -0.032 [-0.106, +0.041]
+                   MOFA factors 0.568 [0.513, 0.624] -0.068 [-0.149, +0.013]    0.605  -0.053 [-0.135, +0.029]
+        clinical + MOFA factors 0.613 [0.561, 0.665] -0.023 [-0.080, +0.033]    0.651  -0.006 [-0.062, +0.050]
+
+== external validation of the frozen signature (results/tables/external_validation.tsv)
+                                          cohort                            score  harrell  harrell_lo  harrell_hi  hr_per_sd  hr_lo  hr_hi     p
+                                GSE31210 primary                   full signature    0.715       0.627       0.792      1.877  1.395  2.526 0.000
+                                GSE31210 primary               RNA component only    0.522       0.411       0.631      1.201  0.864  1.670 0.275
+                                GSE31210 primary          clinical component only    0.693       0.591       0.786      1.908  1.426  2.552 0.000
+                                GSE31210 primary high vs low (frozen TCGA cutoff)      NaN         NaN         NaN      4.361  2.213  8.595 0.000
+    GSE31210 sensitivity (204, flagged excluded)                   full signature    0.715       0.608       0.811      1.894  1.396  2.570 0.000
+    GSE31210 sensitivity (204, flagged excluded)               RNA component only    0.556       0.450       0.671      1.336  0.936  1.908 0.110
+    GSE31210 sensitivity (204, flagged excluded)          clinical component only    0.681       0.562       0.787      1.825  1.365  2.440 0.000
+    GSE31210 sensitivity (204, flagged excluded) high vs low (frozen TCGA cutoff)      NaN         NaN         NaN      4.399  2.132  9.074 0.000
+GSE68465 primary (adenocarcinoma with follow-up)                   full signature    0.697       0.661       0.734      1.946  1.710  2.214 0.000
+GSE68465 primary (adenocarcinoma with follow-up)               RNA component only    0.574       0.534       0.611      1.236  1.089  1.403 0.001
+GSE68465 primary (adenocarcinoma with follow-up)          clinical component only    0.691       0.657       0.725      1.847  1.632  2.091 0.000
+GSE68465 primary (adenocarcinoma with follow-up) high vs low (frozen TCGA cutoff)      NaN         NaN         NaN      2.901  2.233  3.768 0.000
+
+saved results/tables/headline_internal_cv.tsv
+reproduce: all stages finished

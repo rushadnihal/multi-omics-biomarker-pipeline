@@ -1,0 +1,21 @@
+== discrimination from OOF risks (mean over 5 repeats; 95% patient-bootstrap CI, 300 draws)
+  clinical-only   Uno C (5y)  0.622 [0.573, 0.662]
+  clinical-only   AUC 1y      0.667 [0.577, 0.749]
+  clinical-only   AUC 3y      0.671 [0.593, 0.736]
+  clinical-only   AUC 5y      0.673 [0.587, 0.740]
+  clinical + RNA  Uno C (5y)  0.642 [0.591, 0.686]
+  clinical + RNA  AUC 1y      0.711 [0.630, 0.785]
+  clinical + RNA  AUC 3y      0.697 [0.623, 0.769]
+  clinical + RNA  AUC 5y      0.687 [0.594, 0.757]
+  paired difference (clinical + RNA minus clinical-only):
+    Uno C (5y)  +0.020 [+0.001, +0.038]
+    AUC 1y      +0.044 [+0.019, +0.074]
+    AUC 3y      +0.026 [-0.005, +0.054]
+    AUC 5y      +0.014 [-0.018, +0.043]
+  pooled-OOF Harrell C (sanity vs fold means 0.657 / 0.686): {'clinical-only': np.float64(0.645), 'clinical + RNA': np.float64(0.678)}
+
+== risk groups: median split of OOF risk (exploratory; frozen cutoff comes in M8)
+  clinical-only   HR high vs low: per-repeat median 2.49 (range 2.31-2.81); repeat-averaged score 2.84 [2.03, 3.97], log-rank p=2.04e-10; per-repeat log-rank p median 1.94e-08
+  clinical + RNA  HR high vs low: per-repeat median 2.73 (range 2.34-2.91); repeat-averaged score 2.76 [1.97, 3.85], log-rank p=6.2e-10; per-repeat log-rank p median 8e-10
+
+saved results/tables/m7a_discrimination.tsv and results/figures/km_risk_groups_oof.png

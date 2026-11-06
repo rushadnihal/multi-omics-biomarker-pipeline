@@ -1,0 +1,14 @@
+# environment
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/
+# data (raw downloads incl. ~1.7 GB methylation, interim matrices)
+data/
+results_before_repro/
+# large regenerable outputs
+*.parquet
+*.h5
+*.hdf5
+*.egg-info/

@@ -1,0 +1,14 @@
+numpy
+pandas
+scipy
+scikit-learn
+scikit-survival
+lifelines
+statsmodels
+matplotlib
+seaborn
+pyarrow
+pyyaml
+pytest
+ruff
+mofapy2

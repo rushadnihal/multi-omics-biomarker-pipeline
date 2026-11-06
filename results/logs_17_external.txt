@@ -1,0 +1,34 @@
+signature_v1 verified (sha256 704878c704c0...); genes ['DKK1', 'TLE1', 'LDHA', 'USP4', 'SEC61G']; frozen cutoff -0.166
+
+--- GSE31210 primary: n=226, events=35
+  full signature           Harrell C 0.715 [0.627, 0.792]; Uno C(5y) 0.682; HR per SD 1.88 [1.40, 2.53] p=3.17e-05
+  RNA component only       Harrell C 0.522 [0.411, 0.631]; Uno C(5y) 0.523; HR per SD 1.20 [0.86, 1.67] p=0.275
+  clinical component only  Harrell C 0.693 [0.591, 0.786]; Uno C(5y) 0.654; HR per SD 1.91 [1.43, 2.55] p=1.35e-05
+  calibration slope of the full score 1.52 [0.81, 2.24]
+  high vs low, frozen TCGA cutoff: 70 high / 156 low; HR 4.36 [2.21, 8.60] Cox p=2.09e-05, log-rank p=3.44e-06
+  high vs low, within-cohort median: 113 high / 113 low; HR 4.06 [1.84, 8.94] Cox p=0.000515, log-rank p=0.00017
+  added value of RNA component over clinical component: coef +0.45, LR p=0.616
+  criteria: C>0.60 & lower CI>0.50: MET; HR>1 & p<0.05 (frozen cutoff): MET; calibration slope within 1±0.3: no
+
+--- GSE31210 sensitivity (204, flagged excluded): n=204, events=30
+  full signature           Harrell C 0.715 [0.608, 0.811]; Uno C(5y) 0.681; HR per SD 1.89 [1.40, 2.57] p=4.11e-05
+  RNA component only       Harrell C 0.556 [0.450, 0.671]; Uno C(5y) 0.554; HR per SD 1.34 [0.94, 1.91] p=0.11
+  clinical component only  Harrell C 0.681 [0.562, 0.787]; Uno C(5y) 0.641; HR per SD 1.83 [1.36, 2.44] p=4.94e-05
+  calibration slope of the full score 1.62 [0.85, 2.39]
+  high vs low, frozen TCGA cutoff: 54 high / 150 low; HR 4.40 [2.13, 9.07] Cox p=6.09e-05, log-rank p=1.19e-05
+  high vs low, within-cohort median: 102 high / 102 low; HR 3.81 [1.63, 8.88] Cox p=0.00199, log-rank p=0.000883
+  added value of RNA component over clinical component: coef +1.03, LR p=0.286
+  criteria: C>0.60 & lower CI>0.50: MET; HR>1 & p<0.05 (frozen cutoff): MET; calibration slope within 1±0.3: no
+
+--- GSE68465 primary (adenocarcinoma with follow-up): n=442, events=236
+  full signature           Harrell C 0.697 [0.661, 0.734]; Uno C(5y) 0.698; HR per SD 1.95 [1.71, 2.21] p=5.08e-24
+  RNA component only       Harrell C 0.574 [0.534, 0.611]; Uno C(5y) 0.573; HR per SD 1.24 [1.09, 1.40] p=0.00107
+  clinical component only  Harrell C 0.691 [0.657, 0.725]; Uno C(5y) 0.690; HR per SD 1.85 [1.63, 2.09] p=2.69e-22
+  calibration slope of the full score 1.24 [1.00, 1.47]
+  high vs low, frozen TCGA cutoff: 188 high / 254 low; HR 2.90 [2.23, 3.77] Cox p=1.45e-15, log-rank p=6.97e-17
+  high vs low, within-cohort median: 221 high / 221 low; HR 2.46 [1.88, 3.21] Cox p=4.39e-11, log-rank p=9.92e-12
+  added value of RNA component over clinical component: coef +0.99, LR p=0.00204
+  HR per SD adjusted for adjuvant chemotherapy: 1.92 [1.68, 2.19] p=3.89e-22
+  criteria: C>0.60 & lower CI>0.50: MET; HR>1 & p<0.05 (frozen cutoff): MET; calibration slope within 1±0.3: yes
+
+saved results/tables/external_validation.tsv and results/figures/external_km.png

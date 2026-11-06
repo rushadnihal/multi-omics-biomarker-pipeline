@@ -1,0 +1,13 @@
+final fit on 442 patients / 159 events: l1=0.9, alpha=0.1049, inner-CV Harrell 0.700
+RNA genes kept after screening/prevalence: 1000; non-zero in final model: 5
+clinical coefficients (per SD): {'age': 0.064, 'male': -0.011, 'stage_II': 0.344, 'stage_III': 0.43, 'stage_IV': 0.291}
+RNA genes (coef per SD of z-scored expression):
+   DKK1         +0.148
+   TLE1         +0.116
+   SEC61G       +0.019
+   LDHA         +0.010
+   USP4         -0.009
+apparent (training) Harrell C 0.725  [optimistic; honest estimate is the CV 0.690 / Uno 0.650]
+frozen cutoff = TCGA median lp -0.166; lp SD 0.583
+signature saved: results/models/signature_v1.json
+sha256 704878c704c0b13e3c1f4e3fb3e7671bf411eae7e13611f19342a47c8cd48041

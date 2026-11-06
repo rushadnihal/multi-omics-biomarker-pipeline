@@ -1,0 +1,17 @@
+clinical + rnashared: blocks [('clin', 5), ('rna', 11753)]; events=159; clinical block unpenalised, omics penalised (l1 grid [0.1, 0.5, 0.9])
+
+folds ok: 25/25; fits that errored inside folds: 0
+
+== clinical + rnashared: repeated 5x5 CV, nested tuning, identical folds
+  harrell  0.690 [0.648, 0.732] | clinical-only 0.657 | diff +0.033 [+0.006, +0.060] p=0.019
+  uno      0.650 [0.596, 0.704] | clinical-only 0.636 | diff +0.014 [-0.023, +0.051] p=0.443
+  >> internal criterion (Uno diff CI excludes 0 and > 0): NOT met
+  inner-CV C (selected) mean 0.687; l1 chosen: {0.9: np.int64(17), 0.1: np.int64(4), 0.5: np.int64(4)}
+  penalised non-zero omics features per fold: median 7 (range 2-102)
+  omics features selected in >=50% of folds: 2; >=20%: 9; ever: 149
+  top 10: DKK1(1.00), TLE1(1.00), PKP2(0.40), SEC61G(0.28), SMS(0.24), USP4(0.24), DAAM2(0.20), PRKCD(0.20), LDHA(0.20), CCR2(0.16)
+saved results/tables/combo_rnashared_*.tsv and results/models/oof_risk_combo_rnashared.parquet
+
+== cost of restricting RNA to the shared pool (paired, same folds): shared minus full-pool clinical+RNA
+  harrell  full 0.686 -> shared 0.690; diff +0.004 [-0.010, +0.018]
+  uno      full 0.648 -> shared 0.650; diff +0.002 [-0.010, +0.014]

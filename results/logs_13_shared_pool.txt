@@ -1,0 +1,11 @@
+TCGA RNA features 60660; with a symbol 60660; unique symbols 59427
+
+GPL570: 54675 probes, 42986 with a single gene symbol; gse31210 matrix (54675, 246); values: min 0.06, median 99.56, p99 11103.14, max 53813.79, NaN 0.0000
+  probes matched to matrix rows 42986; unique symbols 21653
+
+GPL96: 22283 probes, 19820 with a single gene symbol; gse68465 matrix (22283, 462); values: min 0.06, median 207.33, p99 11425.81, max 130623.00, NaN 0.0000
+  probes matched to matrix rows 19820; unique symbols 12547
+
+shared symbols: TCGA ∩ GPL570 ∩ GPL96 = 11753
+share of total TCGA RNA variance in shared genes: 0.56; of TCGA features: 0.19
+saved results/tables/shared_gene_map.tsv, data/interim/gse31210_gene.parquet, data/interim/gse68465_gene.parquet

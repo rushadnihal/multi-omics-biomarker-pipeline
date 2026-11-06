@@ -1,0 +1,23 @@
+== calibration slope of OOF linear predictor (1 = well calibrated; <1 = over-fit)
+  clinical-only   slope median 0.84 (range 0.74-0.92); median 95% CI [0.56, 1.11]
+  clinical + RNA  slope median 0.97 (range 0.73-0.98); median 95% CI [0.70, 1.24]
+
+== added value: Cox(clinical OOF) vs Cox(clinical OOF + clinical+RNA OOF), LR test, 1 df
+  LR p per repeat: median 0.000459 (range 2.6e-08-0.0293); coef of RNA-model score +1.70
+
+== Brier score (lower = better) and integrated Brier 1-5y, vs null KM model; mean over repeats
+  clinical-only   Brier 1y/3y/5y: 0.103 / 0.212 / 0.221  IBS 0.198  (null: 0.108 / 0.232 / 0.241; IBS 0.213)
+  clinical + RNA  Brier 1y/3y/5y: 0.101 / 0.207 / 0.219  IBS 0.193  (null: 0.108 / 0.232 / 0.241; IBS 0.213)
+
+== calibration at 5y (quintiles of predicted 5y event risk; recalibrated on OOF) and decision curve
+  clinical-only   predicted vs observed 5y event risk by quintile: 0.43/0.37, 0.45/0.47, 0.52/0.68, 0.71/0.63, 0.82/0.79
+  clinical + RNA  predicted vs observed 5y event risk by quintile: 0.39/0.40, 0.43/0.47, 0.53/0.64, 0.71/0.67, 0.86/0.79
+  net benefit at threshold 0.3: clinical-only 0.420, clinical + RNA 0.420, treat-all 0.420
+  net benefit at threshold 0.4: clinical-only 0.316, clinical + RNA 0.336, treat-all 0.323
+  net benefit at threshold 0.5: clinical-only 0.224, clinical + RNA 0.230, treat-all 0.188
+
+== proportional hazards (Schoenfeld, rank time) for the standardised score, and 5y RMST by risk group
+  clinical-only   PH p=0.082; HR per SD 1.57; 5y RMST low-minus-high 417 days [314, 532]
+  clinical + RNA  PH p=0.026; HR per SD 1.73; 5y RMST low-minus-high 410 days [315, 533]
+
+saved results/figures/m7b_calibration_dca.png and results/models/oof_risk_clinical.parquet

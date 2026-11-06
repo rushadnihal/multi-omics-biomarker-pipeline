@@ -1,0 +1,1168 @@
+MOFA+ -> Cox; fixed settings: {'n_factors': 8, 'cox_alpha': 0.01, 'iterations': 1000, 'convergence_mode': 'fast'}
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 45 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 44 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 42 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 43 ##
+######################################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 49 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 46 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 48 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 47 ##
+######################################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 51 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 50 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 53 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 52 ##
+######################################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 56 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 54 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 55 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 57 ##
+######################################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 59 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 60 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 61 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 58 ##
+######################################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 62 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 64 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 65 ##
+######################################
+
+
+Successfully loaded view='rna' group='g0' with N=353 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=353 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=353 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 63 ##
+######################################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+        #########################################################
+        ###           __  __  ____  ______                    ### 
+        ###          |  \/  |/ __ \|  ____/\    _             ### 
+        ###          | \  / | |  | | |__ /  \ _| |_           ### 
+        ###          | |\/| | |  | |  __/ /\ \_   _|          ###
+        ###          | |  | | |__| | | / ____ \|_|            ###
+        ###          |_|  |_|\____/|_|/_/    \_\              ###
+        ###                                                   ### 
+        ######################################################### 
+         
+
+
+Successfully loaded view='rna' group='g0' with N=354 samples and D=1000 features...
+Successfully loaded view='mirna' group='g0' with N=354 samples and D=300 features...
+Successfully loaded view='meth' group='g0' with N=354 samples and D=2000 features...
+
+
+Model options:
+- Automatic Relevance Determination prior on the factors: True
+- Automatic Relevance Determination prior on the weights: True
+- Spike-and-slab prior on the factors: False
+- Spike-and-slab prior on the weights: True
+Likelihoods:
+- View 0 (rna): gaussian
+- View 1 (mirna): gaussian
+- View 2 (meth): gaussian
+
+
+
+
+######################################
+## Training the model with seed 66 ##
+######################################
+
+
+
+== MOFA+ factors -> Cox, repeated 5x5 CV, identical folds, no tuning
+  MOFA factors             harrell  0.605 [0.547, 0.663] | vs clinical Cox: -0.053 [-0.135, +0.030] | vs early clinical+rna: -0.082 [-0.156, -0.007]
+  MOFA factors             uno      0.568 [0.512, 0.624] | vs clinical Cox: -0.068 [-0.149, +0.013] | vs early clinical+rna: -0.080 [-0.156, -0.004]
+  clinical + MOFA factors  harrell  0.651 [0.609, 0.693] | vs clinical Cox: -0.006 [-0.063, +0.050] | vs early clinical+rna: -0.035 [-0.084, +0.014]
+  clinical + MOFA factors  uno      0.613 [0.561, 0.665] | vs clinical Cox: -0.023 [-0.080, +0.034] | vs early clinical+rna: -0.035 [-0.082, +0.012]
+
+  factor Cox coefficients (clinical + MOFA), mean | share positive:
+    F1: -0.376 | 12%
+    F2: -0.080 | 24%
+    F3: -0.030 | 44%
+    F4: -0.043 | 40%
+    F5: -0.035 | 40%
+    F6: +0.046 | 64%
+    F7: -0.041 | 44%
+    F8: -0.012 | 40%
+  features per view (fold 0): {'rna': 1000, 'mirna': 300, 'meth': 2000}
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+
+
+Converged!
+
+
+
+#######################
+## Training finished ##
+#######################
+
+

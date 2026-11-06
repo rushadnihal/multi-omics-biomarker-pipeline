@@ -1,0 +1,16 @@
+[Parallel(n_jobs=4)]: Using backend LokyBackend with 4 concurrent workers.
+non-linear comparators; hyperparameters fixed in config: {'rsf_omics': {'n_estimators': 500, 'min_samples_leaf': 15, 'max_features': 'sqrt'}, 'rsf_clin': {'n_estimators': 500, 'min_samples_leaf': 15, 'max_features': None}, 'gbm_omics': {'n_estimators': 200, 'learning_rate': 0.05, 'max_depth': 2, 'subsample': 0.7, 'max_features': 'sqrt'}}
+[Parallel(n_jobs=4)]: Done  10 tasks      | elapsed:  2.3min
+[Parallel(n_jobs=4)]: Done  25 out of  25 | elapsed:  4.8min finished
+
+folds ok: 25/25
+
+== non-linear comparators, repeated 5x5 CV, identical folds, no tuning
+  RSF clinical         harrell  0.645 [0.596, 0.693] | vs clinical Cox: -0.013 [-0.054, +0.029] | vs early clinical+rna: -0.041 [-0.085, +0.002]
+  RSF clinical         uno      0.607 [0.550, 0.665] | vs clinical Cox: -0.029 [-0.071, +0.013] | vs early clinical+rna: -0.041 [-0.096, +0.015]
+  RSF clinical+omics   harrell  0.625 [0.576, 0.673] | vs clinical Cox: -0.032 [-0.107, +0.042] | vs early clinical+rna: -0.061 [-0.131, +0.008]
+  RSF clinical+omics   uno      0.579 [0.525, 0.633] | vs clinical Cox: -0.057 [-0.136, +0.021] | vs early clinical+rna: -0.069 [-0.149, +0.011]
+  GBM clinical+omics   harrell  0.618 [0.564, 0.671] | vs clinical Cox: -0.040 [-0.119, +0.040] | vs early clinical+rna: -0.068 [-0.143, +0.006]
+  GBM clinical+omics   uno      0.574 [0.523, 0.625] | vs clinical Cox: -0.062 [-0.140, +0.015] | vs early clinical+rna: -0.074 [-0.152, +0.004]
+
+  GBM mean feature importance, top 12: cg20268054(0.004), cg13862848(0.004), cg04294383(0.003), cg11940526(0.003), cg27018309(0.003), cg07081759(0.003), cg26475594(0.003), cg03942855(0.003), cg26608667(0.003), cg09743906(0.003), cg10347859(0.002), cg14139311(0.002)
