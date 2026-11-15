@@ -79,7 +79,7 @@ src/mosurv/      in-fold preprocessing, models, MOFA+ projection, signature scor
 scripts/         numbered pipeline steps, 00 (inspection) through 18 (verify and summarise)
 tests/           unit tests (leakage-sensitive pieces and signature scoring)
 results/         tables, figures, frozen signature, reproduction log
-docs/STATE.md    running log of decisions and status
+docs/decision-log.md   chronological log of decisions, criteria and freeze points
 reproduce.mk     one-command reproduction stages
 ```
 
