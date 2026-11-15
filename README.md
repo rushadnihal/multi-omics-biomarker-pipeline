@@ -1,5 +1,7 @@
 # Multi-omics survival biomarker for lung adenocarcinoma
 
+[![CI](https://github.com/rushadnihal/multi-omics-biomarker-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/rushadnihal/multi-omics-biomarker-pipeline/actions/workflows/ci.yml)
+
 A leakage-controlled pipeline that turns more than 50,000 noisy molecular features from fewer than 500 TCGA-LUAD patients into a prognostic signature for censored overall survival, then tests that signature on two independent cohorts without refitting anything.
 
 **Full write-up:** [`multiomics_biomarker_report.pdf`](multiomics_biomarker_report.pdf) (6 pages)
@@ -93,3 +95,7 @@ reproduce.mk     one-command reproduction stages
 ## Data sources
 
 TCGA-LUAD via the curated pan-cancer survival table (Liu et al., Cell 2018); GEO GSE31210 (Affymetrix GPL570) and GSE68465 (GPL96).
+
+## Licence
+
+MIT (see `LICENSE`).
