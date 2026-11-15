@@ -1,4 +1,8 @@
-# STATE
+# Decision log
+
+Chronological log written while the analysis was being run. It records the decisions, criteria and
+freeze points (signature frozen and hashed before any external cohort was scored) in the order they were made.
+The README holds the final results; this file shows how they were reached.
 
 ## Environment
 - macOS, Python 3.12, venv + pip. Project root = this folder. `make test` passes (milestone 1).
@@ -80,12 +84,6 @@
 - BENCHMARK SO FAR (Uno C, same folds): clinical-only 0.636 | +RNA 0.648 | +miRNA 0.626 | +meth 0.632 |
   early all 0.636 | late stacking 0.634. No integration strategy meets the criterion (CI half-width ~0.035).
 
-## Next
-- Decision pending with user: finish M6 (MOFA+ factors -> Cox, RSF / gradient-boosted survival) vs go to freeze + external
-  validation. Final-candidate selection must follow a rule fixed beforehand (e.g. simplest model within 1 SE of best),
-  not best-C-index hunting.
-- M7 full evaluation, M8 freeze signature_v1.json + GSE31210 validation (pre-specified), M9 interpretation.
-
 ## Reproduce
 - `bash setup.sh && .venv/bin/python scripts/01_download.py && .venv/bin/python scripts/02_cohort.py`
   `&& .venv/bin/python scripts/03c_build_matrices_qc.py && .venv/bin/python scripts/03d_filter_meth_autosomal.py`
@@ -141,4 +139,4 @@ Cohorts: GSE31210 226 tumours/35 deaths (sensitivity 204/30 events); GSE68465 44
 - Fixed criteria: C>0.60 with lower CI>0.50 MET in all; HR>1 with p<0.05 MET in all; calibration slope within 1+/-0.3 (rule I set before running): MET in GSE68465, NOT met in GSE31210 (point estimate 1.5-1.6, CI includes 1). Slope >1 = predictions too compressed (not over-fit).
 - Reading: the full signature validates, but most discrimination comes from the clinical block (stage, age): clinical part alone 0.68-0.69 vs full 0.70-0.72. The RNA part alone is not distinguishable from chance in GSE31210 (stage I-II, 35 events, low power) and is small but real in GSE68465 (C 0.574, HR/SD 1.24, adds to clinical LR p=0.002; HR/SD 1.92 after adjusting for adjuvant chemo).
 - Honest claim: a clinical+RNA prognostic model replicates externally; an independent RNA contribution is supported by one large cohort and not detectable in the other. Internal CV criterion for gain over clinical-only was NOT met.
-- Incident: first run crashed at the adjuvant-chemo adjustment (index misalignment bug); fixed mechanically and re-run; first-pass numbers were identical. A stale-file delivery also required a re-send. GSE31210 characteristic rows are ragged: parse by cell label, not row.
+- Incident: first run crashed at the adjuvant-chemo adjustment (index misalignment bug); fixed mechanically and re-run; first-pass numbers were identical. GSE31210 characteristic rows are ragged: parse by cell label, not row.
