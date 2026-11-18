@@ -61,13 +61,15 @@ Requires Python 3.12 and about one hour on a laptop plus roughly 2 GB of disk fo
 ```bash
 git clone https://github.com/rushadnihal/multi-omics-biomarker-pipeline.git
 cd multi-omics-biomarker-pipeline
-bash setup.sh          # virtual environment and dependencies
+bash setup.sh          # virtual environment and pinned dependencies (requirements-lock.txt)
 source .venv/bin/activate
 make test              # unit tests
 make reproduce         # download, build, evaluate, freeze, validate, summarise
 ```
 
 Individual stages are available as make targets: `data`, `cohort`, `matrices`, `baselines`, `integration`, `nonlinear`, `internal-eval`, `signature`, `external`, `summary` (see `reproduce.mk`).
+
+Package versions are pinned in `requirements-lock.txt` (Python 3.12); CI installs exactly these and runs the unit tests with them. `requirements.txt` lists the direct dependencies without versions, for anyone who wants to update.
 
 Raw data are not stored in this repository. They are downloaded by `scripts/01_download.py`: the TCGA-LUAD RNA-seq, 450K methylation and miRNA matrices with the curated survival table, and GEO series GSE31210 and GSE68465.
 
