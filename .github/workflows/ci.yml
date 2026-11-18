@@ -26,7 +26,8 @@ jobs:
         continue-on-error: true
       - name: Record package versions (requirements-lock.txt)
         run: pip freeze --exclude-editable > requirements-lock.txt
-      - uses: actions/upload-artifact@v4
-        with:
-          name: requirements-lock
-          path: requirements-lock.txt
+      - name: Print lockfile
+        run: |
+          echo BEGIN_LOCKFILE
+          cat requirements-lock.txt
+          echo END_LOCKFILE
